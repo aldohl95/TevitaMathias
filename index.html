@@ -64,6 +64,10 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
               <dd>Computer science, Skagit Valley College, expected graduation June 2027</dd>
             </div>
             <div>
+              <dt>Coursework</dt>
+              <dd>Data structures and algorithms, operating systems, discrete mathematics, web application development, cloud fundamentals, UX and UI design</dd>
+            </div>
+            <div>
               <dt>Areas of interest</dt>
               <dd>Back-end development, software testing, research computing</dd>
             </div>
@@ -75,7 +79,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
 
           <div class="bio">
             <p>I'm a computer science student at Skagit Valley College in Washington, and I graduate in June 2027. I'm aiming for an entry-level software development role, in Washington or remote, and I'm also interested in research computing.</p>
-            <p>I grew up in Hawaii and moved often after that because my family was in the military, so I have plenty of practice adapting to new places and new teams. From 2018 to 2022 I was a store manager at Gamers Only in Georgia, which gave me hands-on experience leading a team and serving customers directly. I work alongside my studies, so I've learned to plan my time and make steady progress in small steps.</p>
+            <p>I grew up in Hawaii and moved often after that because my family was in the military, so I have plenty of practice adapting to new places and new teams. From 2018 to 2022 I was a store manager at Gamers Only in Georgia, where I led a four-person team and grew revenue 32% by moving the store onto the TCGplayer online marketplace. I work alongside my studies, so I've learned to plan my time and make steady progress in small steps.</p>
             <p>My strongest work so far is back-end Java. SaveMySeat, a ticketing system that stays correct when many people try to buy the last tickets at once, is the project I'm proudest of. I also build tools in Python, write automated tests, and document design decisions so other people can follow my reasoning. I'm a member of the Computer Club at Skagit Valley College.</p>
           </div>
         </div>
@@ -85,7 +89,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
     <section id="projects" aria-labelledby="projects-title">
       <div class="wrap">
         <h2 id="projects-title">Featured projects</h2>
-        <p class="projects-intro">Four projects, ordered from my strongest to my least finished. Each one links to its source code so you can check what I describe.</p>
+        <p class="projects-intro">Four projects. Each one links to its source code so you can check what I describe.</p>
 
         <article class="project" aria-labelledby="savemyseat-title">
           <div class="project-meta">
@@ -129,6 +133,38 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
           </div>
         </article>
 
+        <article class="project" aria-labelledby="taskmentor-title">
+          <div class="project-meta">
+            <h3 id="taskmentor-title">Task Mentor</h3>
+            <p class="project-summary">A deployed team web app that connects students with mentors for short, task-based help.</p>
+
+            <h4>Tools and languages</h4>
+            <p>Java 21, Spring Boot, Spring Security, JWT, JPA, PostgreSQL, React, Vite, Docker, Render, Netlify</p>
+
+            <h4>Evidence</h4>
+            <ul>
+              <li><a href="https://github.com/don-strong/task-mentor">Team source code on GitHub</a></li>
+            </ul>
+          </div>
+
+          <div class="project-body">
+            <dl>
+              <dt>The problem</dt>
+              <dd>Traditional mentorship is open-ended and hard to schedule. In Task Mentor, mentors publish a menu of specific, time-limited services such as a 30-minute resume review, and students book exactly the help they need.</dd>
+
+              <dt>My role</dt>
+              <dd>I was the project manager and a full-stack developer on a four-person team, and I wrote 61 of the repository's 92 commits. I ran our branch and pull-request workflow. I built the mentor search, the login and registration back end with JWT, the React login state and protected routes, the cross-origin (CORS) configuration, and the first batch of unit, integration, and security tests.</dd>
+
+              <dt>Decisions I made</dt>
+              <dd>Students and mentors see different features, so I added role-based access with protected routes in the React app, backed by JWT authentication in Spring Security. I put search in its own service and controller so the dashboard and the mentor browsing page can share it.</dd>
+
+              <dt>Results</dt>
+              <dd>Every core feature in the README is checked off: registration and login, student and mentor profiles, task offerings, mentor search with filters, and booking requests that mentors can accept or decline. We containerized the back end with Docker and deployed it on Render, with the front end on Netlify.</dd>
+              <dd>Late in the release I tracked down bugs that crossed the front end and back end, including CORS, routing, and redirect problems, and fixed them before the final version.</dd>
+            </dl>
+          </div>
+        </article>
+
         <article class="project" aria-labelledby="interviewprep-title">
           <div class="project-meta">
             <h3 id="interviewprep-title">InterviewPrep CLI</h3>
@@ -140,6 +176,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <h4>Evidence</h4>
             <ul>
               <li><a href="https://github.com/aldohl95/InterviewPrepCli">Source code on GitHub</a></li>
+              <li><a href="https://pypi.org/project/interviewprep-cli/">Package on PyPI</a></li>
               <li><a href="https://github.com/aldohl95/InterviewPrepCli/blob/main/docs/scheduler.md">Scheduling algorithm write-up</a></li>
               <li><a href="https://github.com/aldohl95/InterviewPrepCli/tree/main/tests">Automated tests</a></li>
             </ul>
@@ -158,7 +195,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
               <dd>Data is stored as JSON so it is easy to read and back up. Reviewing a problem creates a new attempt record instead of editing the old one, which keeps my history intact. Problem names act as identifiers, which I accepted for a single-user tool.</dd>
 
               <dt>Results</dt>
-              <dd>The tool can add, list, view, edit, and delete problems, record reviews, show a progress dashboard, list what is due today with a streak counter, and import or export data as JSON. It has 42 automated tests and is packaged so it can be installed with pip or pipx.</dd>
+              <dd>The tool can add, list, view, edit, and delete problems, record reviews, show a progress dashboard, list what is due today with a streak counter, and import or export data as JSON. It has 42 automated tests and is published on PyPI as <code>interviewprep-cli</code>, so it installs with pip or pipx.</dd>
 
               <dt>What I would improve next</dt>
               <dd>Move storage to SQLite, separate a problem from its attempts, recalculate schedules when a problem is edited, add list filters, and add a continuous integration pipeline. This repository does not have one yet.</dd>
@@ -198,36 +235,6 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
           </div>
         </article>
 
-        <article class="project" aria-labelledby="taskmentor-title">
-          <div class="project-meta">
-            <h3 id="taskmentor-title">Task Mentor</h3>
-            <p class="project-summary">A team web app that connects students with mentors for short, task-based help.</p>
-
-            <h4>Tools and languages</h4>
-            <p>Java 21, Spring Boot, Spring Security, JWT, JPA, PostgreSQL, React, Vite</p>
-
-            <h4>Evidence</h4>
-            <ul>
-              <li><a href="https://github.com/aldohl95/TaskMentorSolo">Source code on GitHub</a></li>
-            </ul>
-          </div>
-
-          <div class="project-body">
-            <dl>
-              <dt>The problem</dt>
-              <dd>Traditional mentorship is open-ended and hard to schedule. In Task Mentor, mentors publish a menu of specific, time-limited services such as a 30-minute resume review, and students book exactly the help they need.</dd>
-
-              <dt>My role</dt>
-              <dd>I was the project manager and a developer on a four-person team. My part of this repository covers the project setup, the user and profile entities, the database schema and seed data, JWT login and registration, and the first version of the React front end. I also wrote the README.</dd>
-
-              <dt>How the team worked</dt>
-              <dd>We split the work into weekly milestones: authentication, profiles, tasks, search, then booking. We agreed on a written definition of done, so a feature counts only when it is reviewed, merged, and demonstrated.</dd>
-
-              <dt>Where it stands</dt>
-              <dd class="honest-note">This is the least finished project here. Registration, login, and profiles are my strongest contributions. The README still marks the task menu, mentor search, and booking as in progress, and the repository has one automated test. I include it mainly as evidence of authentication work and team coordination.</dd>
-            </dl>
-          </div>
-        </article>
 
         <p class="projects-intro">More practice work, including coding exercises and small games, is on <a href="https://github.com/aldohl95?tab=repositories">my GitHub repositories page</a>.</p>
       </div>
@@ -244,9 +251,9 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <p class="level-note">Used in more than one project.</p>
             <ul>
               <li>Java<span class="where">SaveMySeat, Service Request Tracker, Task Mentor</span></li>
-              <li>Spring Boot, Spring Security, JPA<span class="where">REST APIs, JWT login, role-based access</span></li>
-              <li>Git and GitHub<span class="where">Feature branches and pull requests</span></li>
-              <li>Automated testing with JUnit<span class="where">Unit and integration tests</span></li>
+              <li>Spring Boot, Spring Security, Spring Data JPA<span class="where">REST APIs, JWT login, role-based access</span></li>
+              <li>Git and GitHub<span class="where">Feature branches and pull requests, including reviews on a four-person team</span></li>
+              <li>Automated testing with JUnit<span class="where">Unit, integration, and security tests</span></li>
             </ul>
           </div>
 
@@ -254,10 +261,10 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <h3>Working knowledge</h3>
             <p class="level-note">Used in one or two projects.</p>
             <ul>
-              <li>Python<span class="where">InterviewPrep CLI with Click, Rich, and pytest</span></li>
-              <li>PostgreSQL and Flyway<span class="where">Schema design and migrations in SaveMySeat</span></li>
-              <li>React, TypeScript, and Vite<span class="where">Front ends for SaveMySeat, Task Mentor, and the tracker</span></li>
-              <li>Docker Compose and Testcontainers<span class="where">Local databases and tests against real PostgreSQL</span></li>
+              <li>Python<span class="where">InterviewPrep CLI, published on PyPI</span></li>
+              <li>SQL, PostgreSQL, and Flyway<span class="where">Schema design and migrations in SaveMySeat</span></li>
+              <li>React, JavaScript, and TypeScript<span class="where">Front ends for SaveMySeat, Task Mentor, and the tracker</span></li>
+              <li>Docker, Docker Compose, and Testcontainers<span class="where">Task Mentor deployment, local databases, and tests against real PostgreSQL</span></li>
               <li>GitHub Actions<span class="where">One CI workflow for SaveMySeat</span></li>
               <li>k6 load testing<span class="where">Throughput measurements in SaveMySeat</span></li>
             </ul>
@@ -267,8 +274,8 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <h3>Still learning</h3>
             <p class="level-note">Gaps I know about.</p>
             <ul>
+              <li>AWS<span class="where">Foundational knowledge from coursework. My deployments so far use Render and Netlify.</span></li>
               <li>Redis<span class="where">Configured in SaveMySeat but not yet used in the code</span></li>
-              <li>Cloud platforms<span class="where">I have not deployed a project to the cloud yet</span></li>
               <li>Security hardening<span class="where">Rate limiting and timing-attack defenses are on my to-do list</span></li>
             </ul>
           </div>
@@ -292,7 +299,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <span class="detail">Source code for every project on this page.</span>
           </li>
           <li>
-            <a href="TODO-LINKEDIN-URL">LinkedIn profile</a>
+            <a href="https://www.linkedin.com/in/tevita-mathias">LinkedIn profile</a>
             <span class="detail">Work history and professional connections.</span>
           </li>
         </ul>
@@ -305,7 +312,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
         <p class="projects-intro">The best way to reach me is by email. I'm currently looking for entry-level software development roles in Washington or remote.</p>
         <ul class="link-list">
           <li>
-            <a href="mailto:TODO-EMAIL">TODO-EMAIL</a>
+            <a href="mailto:mathias.tevita@icloud.com">mathias.tevita@icloud.com</a>
             <span class="detail">Email</span>
           </li>
         </ul>
