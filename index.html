@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tevita Mathias | Software developer portfolio</title>
+  <meta name="description" content="Portfolio of Tevita Mathias, a computer science student at Skagit Valley College building back-end Java and Python projects.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="site-name" href="#top">Tevita Mathias</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#resume-links">Resume and links</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="top" aria-labelledby="page-title">
+      <div class="wrap hero">
+        <div>
+          <h1 id="page-title">Tevita Mathias</h1>
+          <p class="hero-lead">Computer science student building back-end software that stays correct under load, and writing down why I built it that way.</p>
+          <div class="hero-actions">
+            <a class="button" href="#projects">See my projects</a>
+            <a class="button button-quiet" href="https://github.com/aldohl95">GitHub profile</a>
+          </div>
+        </div>
+
+        <figure class="snippet">
+          <pre><code><span class="tok-note">// SaveMySeat: lock the ticket tier row so only</span>
+<span class="tok-note">// one buyer at a time can claim what is left.</span>
+@Lock(LockModeType.PESSIMISTIC_WRITE)
+@Query("SELECT t FROM TicketTier t WHERE t.id = :id")
+Optional&lt;TicketTier&gt; findByIdWithLock(
+    @Param("id") Long id);</code></pre>
+          <figcaption>A few lines from my ticketing project. They stop two buyers from taking the last ticket at the same moment.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <h2 id="about-title">About me</h2>
+        <div class="about-grid">
+          <dl class="facts">
+            <div>
+              <dt>Name</dt>
+              <dd>Tevita Mathias</dd>
+            </div>
+            <div>
+              <dt>Program</dt>
+              <dd>Computer science, Skagit Valley College, expected graduation June 2027</dd>
+            </div>
+            <div>
+              <dt>Areas of interest</dt>
+              <dd>Back-end development, software testing, research computing</dd>
+            </div>
+            <div>
+              <dt>Looking for</dt>
+              <dd>Entry-level software development roles in Washington or remote</dd>
+            </div>
+          </dl>
+
+          <div class="bio">
+            <p>I'm a computer science student at Skagit Valley College in Washington, and I graduate in June 2027. I'm aiming for an entry-level software development role, in Washington or remote, and I'm also interested in research computing.</p>
+            <p>I grew up in Hawaii and moved often after that because my family was in the military, so I have plenty of practice adapting to new places and new teams. From 2018 to 2022 I was a store manager at Gamers Only in Georgia, which gave me hands-on experience leading a team and serving customers directly. I work alongside my studies, so I've learned to plan my time and make steady progress in small steps.</p>
+            <p>My strongest work so far is back-end Java. SaveMySeat, a ticketing system that stays correct when many people try to buy the last tickets at once, is the project I'm proudest of. I also build tools in Python, write automated tests, and document design decisions so other people can follow my reasoning. I'm a member of the Computer Club at Skagit Valley College.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <h2 id="projects-title">Featured projects</h2>
+        <p class="projects-intro">Four projects, ordered from my strongest to my least finished. Each one links to its source code so you can check what I describe.</p>
+
+        <article class="project" aria-labelledby="savemyseat-title">
+          <div class="project-meta">
+            <h3 id="savemyseat-title">SaveMySeat</h3>
+            <p class="project-summary">A ticketing back end for small venues that never sells the same ticket twice.</p>
+
+            <h4>Tools and languages</h4>
+            <p>Java, Spring Boot, PostgreSQL, Flyway, JWT, JUnit 5, Testcontainers, k6, Docker Compose, GitHub Actions, React, TypeScript, Vite</p>
+
+            <h4>Evidence</h4>
+            <ul>
+              <li><a href="https://github.com/aldohl95/SaveMySeat">Source code on GitHub</a></li>
+              <li><a href="https://github.com/aldohl95/SaveMySeat/blob/main/backend/src/test/java/com/savemyseat/service/TicketTierServiceTest.java">The 50-thread concurrency test</a></li>
+              <li><a href="https://github.com/aldohl95/SaveMySeat/blob/main/docs/ADR.md">Design decision records</a></li>
+              <li><a href="https://github.com/aldohl95/SaveMySeat/blob/main/docs/PERF-NUMBERS.md">Load test results</a></li>
+              <li><a href="https://github.com/aldohl95/SaveMySeat/tree/main/loadtests">k6 load test scripts</a></li>
+              <li><a href="https://github.com/aldohl95/SaveMySeat/blob/main/.github/workflows/ci.yml">Continuous integration workflow</a></li>
+            </ul>
+          </div>
+
+          <div class="project-body">
+            <dl>
+              <dt>The problem</dt>
+              <dd>When several people try to buy the last few tickets at the same moment, a simple check-then-save lets more than one of them succeed. For a venue that means refunds and unhappy customers. I wanted to build the part of a ticketing system where correctness matters most, and then prove it works.</dd>
+
+              <dt>My role</dt>
+              <dd>I was the only developer. I designed the database schema and migrations, the REST API, authentication, the hold and order logic, the tests, the load tests, and the CI workflow. I also built a small React front end with login, venue and event browsing, and ticket holds.</dd>
+
+              <dt>Decisions I made</dt>
+              <dd>Buyers hold tickets for a short time before they pay, and a scheduled job releases expired holds each minute. Creating a hold locks the ticket tier row in PostgreSQL, so only one transaction at a time can read and change the remaining count.</dd>
+              <dd>My design record compares that lock with optimistic locking, serializable transactions on everything, and Redis as the source of truth. I kept PostgreSQL as the single source of truth because it is the simplest design that cannot oversell. Later I replaced a conditional SQL update I had planned with <code>SELECT ... FOR UPDATE</code> and recorded why.</dd>
+              <dd>Login uses short-lived access tokens and refresh tokens that rotate, and reusing an old refresh token is rejected. Asking for another organizer's event returns "not found", so people can't probe which IDs exist.</dd>
+
+              <dt>Results</dt>
+              <dd>An integration test runs against a real PostgreSQL database. It starts 50 threads that each try to hold one ticket on a 10-ticket tier, then checks that exactly 10 succeed, the tier shows 10 reserved, and 10 holds exist.</dd>
+              <dd>On my laptop, k6 measured about 2,700 hold requests per second against a single tier and about 4,350 per second spread across 21 tiers. The gap shows that the row lock is the limit on throughput. These are laptop numbers, not production benchmarks.</dd>
+
+              <dt>What is unfinished</dt>
+              <dd>Payment is a placeholder with no real Stripe integration yet. Login has no rate limiting. Redis is set up but not used, and each order covers one ticket tier. I listed these gaps in the project documentation instead of hiding them.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="project" aria-labelledby="interviewprep-title">
+          <div class="project-meta">
+            <h3 id="interviewprep-title">InterviewPrep CLI</h3>
+            <p class="project-summary">A command-line tool that tracks coding interview practice and schedules reviews.</p>
+
+            <h4>Tools and languages</h4>
+            <p>Python 3.11, Click, Rich, platformdirs, pytest, Black, Ruff</p>
+
+            <h4>Evidence</h4>
+            <ul>
+              <li><a href="https://github.com/aldohl95/InterviewPrepCli">Source code on GitHub</a></li>
+              <li><a href="https://github.com/aldohl95/InterviewPrepCli/blob/main/docs/scheduler.md">Scheduling algorithm write-up</a></li>
+              <li><a href="https://github.com/aldohl95/InterviewPrepCli/tree/main/tests">Automated tests</a></li>
+            </ul>
+          </div>
+
+          <div class="project-body">
+            <dl>
+              <dt>The problem</dt>
+              <dd>I was tracking practice problems across spreadsheets and notes. I wanted one place to log each attempt, see which patterns I struggle with, and know what to review today.</dd>
+
+              <dt>My role</dt>
+              <dd>I was the only developer. I wrote the specification, built every command, wrote the tests, and documented the project. I worked on feature branches and merged through pull requests.</dd>
+
+              <dt>Decisions I made</dt>
+              <dd>I wrote a simple review scheduler as a table of intervals based on how hard I found a problem and whether I needed help, instead of the SM-2 algorithm. It is easier to test and explain for one person's data, and I documented it before coding it.</dd>
+              <dd>Data is stored as JSON so it is easy to read and back up. Reviewing a problem creates a new attempt record instead of editing the old one, which keeps my history intact. Problem names act as identifiers, which I accepted for a single-user tool.</dd>
+
+              <dt>Results</dt>
+              <dd>The tool can add, list, view, edit, and delete problems, record reviews, show a progress dashboard, list what is due today with a streak counter, and import or export data as JSON. It has 42 automated tests and is packaged so it can be installed with pip or pipx.</dd>
+
+              <dt>What I would improve next</dt>
+              <dd>Move storage to SQLite, separate a problem from its attempts, recalculate schedules when a problem is edited, add list filters, and add a continuous integration pipeline. This repository does not have one yet.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="project" aria-labelledby="tracker-title">
+          <div class="project-meta">
+            <h3 id="tracker-title">Service Request Tracker</h3>
+            <p class="project-summary">A full-stack app for submitting, searching, and updating service requests.</p>
+
+            <h4>Tools and languages</h4>
+            <p>Java 17, Spring Boot, Maven, JUnit, React, Vite, JSON file storage</p>
+
+            <h4>Evidence</h4>
+            <ul>
+              <li><a href="https://github.com/aldohl95/ServiceRequestTracker">Source code on GitHub</a></li>
+              <li><a href="https://github.com/aldohl95/ServiceRequestTracker/tree/main/backend/zip/src/test">Unit and integration tests</a></li>
+            </ul>
+          </div>
+
+          <div class="project-body">
+            <dl>
+              <dt>The problem</dt>
+              <dd>A team needs one place to submit requests, find them by status, priority, requester, or keyword, discuss them, and see every change that was made.</dd>
+
+              <dt>My role</dt>
+              <dd>I built the Spring Boot back end in stages: the data models, service layer, REST controller, validation, combined search filters, partial updates, comments, and change history. I then connected a React front end.</dd>
+
+              <dt>Decisions I made</dt>
+              <dd>Requests are saved in a JSON file, so the app runs with no database setup. Updates use PATCH so a client can change only the status or priority. A search with no matches returns a clear message instead of an empty or null response.</dd>
+
+              <dt>Results</dt>
+              <dd>The back end has 76 automated tests, covering both unit and integration cases. Some of those tests were written with AI assistance, as my commit messages note.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <article class="project" aria-labelledby="taskmentor-title">
+          <div class="project-meta">
+            <h3 id="taskmentor-title">Task Mentor</h3>
+            <p class="project-summary">A team web app that connects students with mentors for short, task-based help.</p>
+
+            <h4>Tools and languages</h4>
+            <p>Java 21, Spring Boot, Spring Security, JWT, JPA, PostgreSQL, React, Vite</p>
+
+            <h4>Evidence</h4>
+            <ul>
+              <li><a href="https://github.com/aldohl95/TaskMentorSolo">Source code on GitHub</a></li>
+            </ul>
+          </div>
+
+          <div class="project-body">
+            <dl>
+              <dt>The problem</dt>
+              <dd>Traditional mentorship is open-ended and hard to schedule. In Task Mentor, mentors publish a menu of specific, time-limited services such as a 30-minute resume review, and students book exactly the help they need.</dd>
+
+              <dt>My role</dt>
+              <dd>I was the project manager and a developer on a four-person team. My part of this repository covers the project setup, the user and profile entities, the database schema and seed data, JWT login and registration, and the first version of the React front end. I also wrote the README.</dd>
+
+              <dt>How the team worked</dt>
+              <dd>We split the work into weekly milestones: authentication, profiles, tasks, search, then booking. We agreed on a written definition of done, so a feature counts only when it is reviewed, merged, and demonstrated.</dd>
+
+              <dt>Where it stands</dt>
+              <dd class="honest-note">This is the least finished project here. Registration, login, and profiles are my strongest contributions. The README still marks the task menu, mentor search, and booking as in progress, and the repository has one automated test. I include it mainly as evidence of authentication work and team coordination.</dd>
+            </dl>
+          </div>
+        </article>
+
+        <p class="projects-intro">More practice work, including coding exercises and small games, is on <a href="https://github.com/aldohl95?tab=repositories">my GitHub repositories page</a>.</p>
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="skills-title">
+      <div class="wrap">
+        <h2 id="skills-title">Skills and tools</h2>
+        <p class="projects-intro">I grouped these by how much I have actually used them, not by how long the list can be.</p>
+
+        <div class="skill-groups">
+          <div class="skill-group">
+            <h3>Comfortable</h3>
+            <p class="level-note">Used in more than one project.</p>
+            <ul>
+              <li>Java<span class="where">SaveMySeat, Service Request Tracker, Task Mentor</span></li>
+              <li>Spring Boot, Spring Security, JPA<span class="where">REST APIs, JWT login, role-based access</span></li>
+              <li>Git and GitHub<span class="where">Feature branches and pull requests</span></li>
+              <li>Automated testing with JUnit<span class="where">Unit and integration tests</span></li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h3>Working knowledge</h3>
+            <p class="level-note">Used in one or two projects.</p>
+            <ul>
+              <li>Python<span class="where">InterviewPrep CLI with Click, Rich, and pytest</span></li>
+              <li>PostgreSQL and Flyway<span class="where">Schema design and migrations in SaveMySeat</span></li>
+              <li>React, TypeScript, and Vite<span class="where">Front ends for SaveMySeat, Task Mentor, and the tracker</span></li>
+              <li>Docker Compose and Testcontainers<span class="where">Local databases and tests against real PostgreSQL</span></li>
+              <li>GitHub Actions<span class="where">One CI workflow for SaveMySeat</span></li>
+              <li>k6 load testing<span class="where">Throughput measurements in SaveMySeat</span></li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h3>Still learning</h3>
+            <p class="level-note">Gaps I know about.</p>
+            <ul>
+              <li>Redis<span class="where">Configured in SaveMySeat but not yet used in the code</span></li>
+              <li>Cloud platforms<span class="where">I have not deployed a project to the cloud yet</span></li>
+              <li>Security hardening<span class="where">Rate limiting and timing-attack defenses are on my to-do list</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="subhead">Professional skills</h3>
+        <p class="projects-intro">Leading a team as a store manager and as a project manager on Task Mentor. Writing design records and READMEs so other people can follow my decisions. Learning new tools while working and studying at the same time.</p>
+      </div>
+    </section>
+
+    <section id="resume-links" aria-labelledby="links-title">
+      <div class="wrap">
+        <h2 id="links-title">Resume and professional links</h2>
+        <ul class="link-list">
+          <li>
+            <a href="assets/Tevita-Mathias-Resume.pdf">Resume (PDF)</a>
+            <span class="detail">Opens a PDF of my current resume.</span>
+          </li>
+          <li>
+            <a href="https://github.com/aldohl95">GitHub: aldohl95</a>
+            <span class="detail">Source code for every project on this page.</span>
+          </li>
+          <li>
+            <a href="TODO-LINKEDIN-URL">LinkedIn profile</a>
+            <span class="detail">Work history and professional connections.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <h2 id="contact-title">Contact</h2>
+        <p class="projects-intro">The best way to reach me is by email. I'm currently looking for entry-level software development roles in Washington or remote.</p>
+        <ul class="link-list">
+          <li>
+            <a href="mailto:TODO-EMAIL">TODO-EMAIL</a>
+            <span class="detail">Email</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Tevita Mathias. Built by hand with HTML and CSS and hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+</body>
+</html>
