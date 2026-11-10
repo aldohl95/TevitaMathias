@@ -97,10 +97,12 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <p class="project-summary">A ticketing back end for small venues that never sells the same ticket twice.</p>
 
             <h4>Tools and languages</h4>
-            <p>Java, Spring Boot, PostgreSQL, Flyway, JWT, JUnit 5, Testcontainers, k6, Docker Compose, GitHub Actions, React, TypeScript, Vite</p>
+            <p>Java, Spring Boot, PostgreSQL, Flyway, JWT, JUnit 5, Testcontainers, k6, Prometheus, Docker, GitHub Actions, Render, Netlify, React, TypeScript, Vite</p>
 
             <h4>Evidence</h4>
             <ul>
+              <li><a href="https://savemyseat-app.netlify.app/">Live demo (front end on Netlify)</a></li>
+              <li><a href="https://savemyseat.onrender.com/swagger-ui.html">Live API docs (Render)</a></li>
               <li><a href="https://github.com/aldohl95/SaveMySeat">Source code on GitHub</a></li>
               <li><a href="https://github.com/aldohl95/SaveMySeat/blob/main/backend/src/test/java/com/savemyseat/service/TicketTierServiceTest.java">The 50-thread concurrency test</a></li>
               <li><a href="https://github.com/aldohl95/SaveMySeat/blob/main/docs/ADR.md">Design decision records</a></li>
@@ -116,7 +118,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
               <dd>When several people try to buy the last few tickets at the same moment, a simple check-then-save lets more than one of them succeed. For a venue that means refunds and unhappy customers. I wanted to build the part of a ticketing system where correctness matters most, and then prove it works.</dd>
 
               <dt>My role</dt>
-              <dd>I was the only developer. I designed the database schema and migrations, the REST API, authentication, the hold and order logic, the tests, the load tests, and the CI workflow. I also built a small React front end with login, venue and event browsing, and ticket holds.</dd>
+              <dd>I was the only developer. I designed the database schema and migrations, the REST API, authentication, the hold and order logic, the tests, the load tests, and the CI workflow. I also built a React and TypeScript front end with registration, login, venue and event browsing, ticket holds, simulated payment, and order history, then deployed the back end in Docker on Render and the front end on Netlify.</dd>
 
               <dt>Decisions I made</dt>
               <dd>Buyers hold tickets for a short time before they pay, and a scheduled job releases expired holds each minute. Creating a hold locks the ticket tier row in PostgreSQL, so only one transaction at a time can read and change the remaining count.</dd>
@@ -128,7 +130,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
               <dd>On my laptop, k6 measured about 2,700 hold requests per second against a single tier and about 4,350 per second spread across 21 tiers. The gap shows that the row lock is the limit on throughput. These are laptop numbers, not production benchmarks.</dd>
 
               <dt>What is unfinished</dt>
-              <dd>Payment is a placeholder with no real Stripe integration yet. Login has no rate limiting. Redis is set up but not used, and each order covers one ticket tier. I listed these gaps in the project documentation instead of hiding them.</dd>
+              <dd>Payment is a placeholder with no real Stripe integration yet. Login has no rate limiting, and each order covers one ticket tier. I removed an unused Redis setup because PostgreSQL is the source of truth. The live back end runs on Render's free tier, so the first request after it sleeps can take a minute. I listed these gaps in the project documentation instead of hiding them.</dd>
             </dl>
           </div>
         </article>
@@ -264,9 +266,9 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
               <li>Python<span class="where">InterviewPrep CLI, published on PyPI</span></li>
               <li>SQL, PostgreSQL, and Flyway<span class="where">Schema design and migrations in SaveMySeat</span></li>
               <li>React, JavaScript, and TypeScript<span class="where">Front ends for SaveMySeat, Task Mentor, and the tracker</span></li>
-              <li>Docker, Docker Compose, and Testcontainers<span class="where">Task Mentor deployment, local databases, and tests against real PostgreSQL</span></li>
+              <li>Docker, Docker Compose, and Testcontainers<span class="where">SaveMySeat and Task Mentor deployments, local databases, and tests against real PostgreSQL</span></li>
               <li>GitHub Actions<span class="where">One CI workflow for SaveMySeat</span></li>
-              <li>k6 load testing<span class="where">Throughput measurements in SaveMySeat</span></li>
+              <li>k6 load testing<span class="where">Throughput measurements in SaveMySeat, plus Prometheus metrics and structured logging</span></li>
             </ul>
           </div>
 
@@ -275,7 +277,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
             <p class="level-note">Gaps I know about.</p>
             <ul>
               <li>AWS<span class="where">Foundational knowledge from coursework. My deployments so far use Render and Netlify.</span></li>
-              <li>Redis<span class="where">Configured in SaveMySeat but not yet used in the code</span></li>
+              <li>Caching and rate limiting with Redis<span class="where">Evaluated for SaveMySeat and deliberately left out; I have not used it in production code</span></li>
               <li>Security hardening<span class="where">Rate limiting and timing-attack defenses are on my to-do list</span></li>
             </ul>
           </div>
@@ -291,7 +293,7 @@ Optional&lt;TicketTier&gt; findByIdWithLock(
         <h2 id="links-title">Resume and professional links</h2>
         <ul class="link-list">
           <li>
-            <a href="assets/Tevita-Mathias-Resume.pdf">Resume (PDF)</a>
+            <a href="assets/Mathias_Tevita_Resume.pdf">Resume (PDF)</a>
             <span class="detail">Opens a PDF of my current resume.</span>
           </li>
           <li>

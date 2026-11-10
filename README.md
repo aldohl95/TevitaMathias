@@ -10,7 +10,7 @@ My professional technology portfolio: who I am, four featured projects with link
 |---|---|
 | `index.html` | The whole site: About me, Featured projects, Skills and tools, Resume and links, Contact |
 | `styles.css` | Styles, including dark mode and a layout for phones and tablets |
-| `assets/Tevita-Mathias-Resume.pdf` | Resume, shared without my phone number |
+| `assets/Mathias_Tevita_Resume.pdf` | Resume, shared without my phone number |
 
 ## How it's built
 
@@ -33,7 +33,7 @@ Then visit http://localhost:8000.
 ## Update it
 
 1. Edit `index.html` or `styles.css`.
-2. To replace the resume, save the new PDF over `assets/Tevita-Mathias-Resume.pdf`.
+2. To replace the resume, save the new PDF over `assets/Mathias_Tevita_Resume.pdf`.
 3. Commit and push to `main`. GitHub Pages republishes within a minute or two.
 
 ## Contact
